@@ -1,5 +1,5 @@
 import { Col, Form, Modal, Row, Table, message } from "antd";
-import React, { useEffect } from "react";
+import React, { useEffect ,useState} from "react";
 import Button from "../../../components/Button";
 import { GetAllMovies } from "../../../apicalls/movies";
 import { useDispatch } from "react-redux";
@@ -12,11 +12,11 @@ import {
 import moment from "moment";
 
 function Shows({ openShowsModal, setOpenShowsModal, theatre }) {
-  const [view, setView] = React.useState("table");
-  const [shows, setShows] = React.useState([]);
-  const [movies, setMovies] = React.useState([]);
+  const [view, setView] = useState("table");
+  const [shows, setShows] = useState([]);
+  const [movies, setMovies] = useState([]);
   const dispatch = useDispatch();
-  const [selectedDate, setSelectedDate] = React.useState(null);
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const getData = async () => {
     if (!theatre?._id) return;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import  { useEffect ,useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
@@ -9,9 +9,9 @@ import moment from "moment";
 
 function BookShow() {
   const { user } = useSelector((state) => state.users);
-  const [show, setShow] = React.useState(null);
+  const [show, setShow] = useState(null);
   const params = useParams();
-  const [selectedSeats, setSelectedSeats] = React.useState([]);
+  const [selectedSeats, setSelectedSeats] = useState([]);
   const dispatch = useDispatch();
 
   const getData = async () => {
@@ -125,7 +125,7 @@ function BookShow() {
       dispatch(HideLoading());
     }
   };
-  const allSeatsBooked = show && show.bookedSeats.length >= show.totalSeats;
+  // const allSeatsBooked = show && show.bookedSeats.length >= show.totalSeats;
 
   return (
     show && (
