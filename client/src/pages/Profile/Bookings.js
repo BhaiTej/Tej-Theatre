@@ -6,7 +6,6 @@ import { message } from "antd";
 import { GetBookingsOfUser, CancelBooking } from "../../apicalls/bookings";
 import moment from "moment";
 
-
 function Bookings() {
   const [bookings, setBookings] = useState([]);
   const dispatch = useDispatch();
@@ -32,7 +31,6 @@ function Bookings() {
       } else {
         message.error(response.message);
       }
-
       dispatch(HideLoading());
     } catch (error) {
       dispatch(HideLoading());
@@ -67,14 +65,24 @@ function Bookings() {
     <div className="bookings-container">
       {bookings.map((booking) => (
         <div className="booking-card" key={booking._id}>
+          {/* Top section with title and poster */}
+          <div className="booking-header">
+            <div className="booking-header-text">
+              <h2>
+                {booking.show.movie.title}{" "}
+                <span>({booking.show.movie.language})</span>
+              </h2>
+              <p className="theatre">
+                {booking.show.theatre.name} - {booking.show.theatre.address}
+              </p>
+            </div>
+            <div className="booking-poster">
+              <img src={booking.show.movie.poster} alt="Poster" />
+            </div>
+          </div>
+
+          {/* Booking details */}
           <div className="booking-info">
-            <h2>
-              {booking.show.movie.title}{" "}
-              <span>({booking.show.movie.language})</span>
-            </h2>
-            <p className="theatre">
-              {booking.show.theatre.name} - {booking.show.theatre.address}
-            </p>
             <p>
               <strong>Date & Time:</strong>{" "}
               {moment(booking.show.date).format("MMM Do YYYY")} -{" "}
@@ -92,18 +100,12 @@ function Bookings() {
             </p>
             <Button
               danger
+              title='Cancel Booking'
               type="primary"
               onClick={() => handleCancel(booking._id)}
-              title="Cancel Booking"
             >
               Cancel Booking
             </Button>
-          </div>
-          <div className="booking-poster">
-            <img
-              src={booking.show.movie.poster}
-              alt="Poster"
-            />
           </div>
         </div>
       ))}
