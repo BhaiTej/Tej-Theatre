@@ -23,9 +23,7 @@ const port = process.env.PORT || 5000;
 // Render deployment
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "/client/build")));
-
-  // Change "*" to "/*" to avoid path-to-regexp error
-  app.get("/*", (req, res) => {
+  app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
   });
 }
