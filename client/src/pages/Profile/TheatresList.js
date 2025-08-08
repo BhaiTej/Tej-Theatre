@@ -127,7 +127,7 @@ function TheatresList() {
                     <i className="ri-pencil-line" />
                   </button>
 
-                  {!record.isActive && !hasShows && (
+                  {!hasShows && (
                     <button
                       aria-label="delete theatre"
                       style={{

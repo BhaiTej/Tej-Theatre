@@ -277,10 +277,4 @@ router.post("/get-shows-by-theatre-id", async (req, res) => {
     });
   }
 });
-
-
-
-
-
-
 module.exports = router;

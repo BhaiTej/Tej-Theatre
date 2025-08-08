@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { GetAllTheatres, UpdateTheatre } from "../../apicalls/theatres";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { HideLoading, ShowLoading } from "../../redux/loadersSlice";
 import { message, Table } from "antd";
 
 function TheatresList() {
-  const [theatres = [], setTheatres] = useState([]);
+  const [theatres, setTheatres] = useState([]);
   const dispatch = useDispatch();
 
   const getData = async () => {
@@ -13,7 +13,7 @@ function TheatresList() {
       dispatch(ShowLoading());
       const response = await GetAllTheatres();
       if (response.success) {
-        setTheatres(response.data);
+        setTheatres(response.data || []);
       } else {
         message.error(response.message);
       }
@@ -61,23 +61,12 @@ function TheatresList() {
     {
       title: "Email",
       dataIndex: "email",
-    },
-    {
-      title: "Owner",
-      dataIndex: "owner",
-      render: (text, record) => {
-        return record.owner.name;
-      },
-    },
+    },    
     {
       title: "Status",
       dataIndex: "isActive",
       render: (text, record) => {
-        if (text) {
-          return "Approved";
-        } else {
-          return "Pending / Blocked";
-        }
+        return text ? "Approved" : "Pending / Blocked";
       },
     },
     {
@@ -86,19 +75,12 @@ function TheatresList() {
       render: (text, record) => {
         return (
           <div className="flex gap-1">
-            {record.isActive && (
-              <span
-                className="underline"
-                onClick={() => handleStatusChange(record)}
-              >
+            {record.isActive ? (
+              <span className="underline" onClick={() => handleStatusChange(record)}>
                 Block
               </span>
-            )}
-            {!record.isActive && (
-              <span
-                className="underline"
-                onClick={() => handleStatusChange(record)}
-              >
+            ) : (
+              <span className="underline" onClick={() => handleStatusChange(record)}>
                 Approve
               </span>
             )}
@@ -111,9 +93,11 @@ function TheatresList() {
   useEffect(() => {
     getData();
   }, []);
+
   return (
     <div>
-      <Table columns={columns} dataSource={theatres} />
+      {/* Fix: add rowKey to uniquely identify rows and prevent React warnings */}
+      <Table columns={columns} dataSource={theatres} rowKey="_id" />
     </div>
   );
 }

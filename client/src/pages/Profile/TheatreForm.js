@@ -18,7 +18,7 @@ function TheatreForm({
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
-  // when editing, populate form
+  // Populate form when editing
   useEffect(() => {
     if (selectedTheatre) {
       form.setFieldsValue(selectedTheatre);
@@ -28,8 +28,8 @@ function TheatreForm({
   }, [selectedTheatre, form]);
 
   const onFinish = async (values) => {
-    // send only the user's email as owner identifier
-    values.ownerEmail = user.email;
+    // Set user email as required by schema
+    values.email = user.email;
 
     try {
       dispatch(ShowLoading());
@@ -103,14 +103,12 @@ function TheatreForm({
 
         <Form.Item
           label="Email"
-          name="ownerEmail"
+          name="email"
           initialValue={user.email}
-          rules={[{ required: true, message: "Owner email is required" }]}
+          rules={[{ required: true, message: "Email is required" }]}
         >
           <Input disabled />
         </Form.Item>
-
-        
 
         <div className="flex justify-end gap-2">
           <Button

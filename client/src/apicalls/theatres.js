@@ -5,7 +5,7 @@ export const AddTheatre = async (payload) => {
   try {
     const response = await axiosInstance.post(
       "/api/theatres/add-theatre",
-      payload
+      payload // ✅ must include email
     );
     return response.data;
   } catch (error) {
@@ -15,6 +15,7 @@ export const AddTheatre = async (payload) => {
     };
   }
 };
+
 
 // Get all theatres
 export const GetAllTheatres = async () => {
@@ -164,4 +165,3 @@ export const GetShowsByTheatreId = async (theatreId) => {
     };
   }
 };
-
